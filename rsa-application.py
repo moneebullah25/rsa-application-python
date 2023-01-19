@@ -1,5 +1,7 @@
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
+from Crypto.Signature import pkcs1_15
+from Crypto.Hash import SHA256
 import binascii
 import tkinter as tk
 from tkinter import filedialog
@@ -91,7 +93,30 @@ def save_file():
         file.write(crypto)
 
 
+def verify_message():
+    plain_text_message = plain_text.get("1.0", tk.END) # get the plain text message from the text widget
+    signature = signature_text.get("1.0", tk.END)
+    signature = bytes.fromhex(signature)
+    h = SHA256.new(plain_text_message.encode())
+    key = RSA.importKey(open("./keys/publicKey.pem").read()) # import the private key from file
+    if not key:
+        messagebox.showerror("Could find keys in keys/ directory")
+    try:
+        pkcs1_15.new(key).verify(h, signature)
+        messagebox.showinfo("Verify Successful", "The signature is valid.")
+    except:
+        messagebox.showerror("Verify Failed", "The signature is not valid.")
 
+
+def sign_message():
+    plain_text_message = plain_text.get("1.0", tk.END) # get the plain text message from the text widget
+    h = SHA256.new(plain_text_message.encode())
+    key = RSA.importKey(open("./keys/privateKey.pem").read()) # import the private key from file
+    if not key:
+        messagebox.showerror("Could find keys in keys/ directory")
+    signature = pkcs1_15.new(key).sign(h)
+    signature_text.delete("1.0", tk.END) # clear the text widget
+    signature_text.insert(tk.INSERT, signature.hex())
 
 
 
