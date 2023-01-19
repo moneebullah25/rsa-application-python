@@ -4,17 +4,24 @@ import binascii
 import tkinter as tk
 from tkinter import filedialog
 
+key = RSA.generate(3072)
+private_key = key.exportKey()
+public_key = key.publickey().exportKey()
+with open('./keys/privateKey.pem', 'wb') as private_file:
+    private_file.write(private_key)
+with open('./keys/publicKey.pem', 'wb') as public_file:
+    public_file.write(public_key)
 
-keyPair = RSA.generate(3072)
-pubKey = keyPair.publickey()
 
 def decrypt(encrypted):
-    decryptor = PKCS1_OAEP.new(keyPair)
+    private_key = RSA.importKey(open("./keys/privateKey.pem").read())
+    decryptor = PKCS1_OAEP.new(private_key)
     decrypted = decryptor.decrypt(encrypted)
     return decrypted
 
 def encrypt(msg):
-    encryptor = PKCS1_OAEP.new(pubKey)
+    public_key = RSA.importKey(open("./keys/publicKey.pem").read())
+    encryptor = PKCS1_OAEP.new(public_key)
     encrypted = encryptor.encrypt(msg)
     return encrypted
 
