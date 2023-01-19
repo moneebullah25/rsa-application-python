@@ -39,6 +39,10 @@ python rsa\_encryption\_tool.py
 - To encrypt a message, enter the plain text message in the "Plain Text" text widget and click the "Encrypt" button. The encrypted message will be displayed in the "Encrypted Text" text widget.
 - To read a plain text file, click the "Read from File" button and select the file you want to read. The contents of the file will be displayed in the "Plain Text" text widget.
 - To save an encrypted message to a file, click the "Save to File" button and select the location where you want to save the file.
+- Click on the "Sign" button to sign the plain text message and display the signature in the "Signature Text" field.
+- Click on the "Verify" button to verify the signature of the plain text message. The tool will display the result if the signature is valid or not.
+- To generate new RSA keys, click on the "Generate Keys" button. These keys will be saved in the "keys" folder.
+- To load the existing keys, click on the "Load Keys" button. From that point these loaded keys will be used.
 
 **Built With**
 
