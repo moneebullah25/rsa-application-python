@@ -3,6 +3,7 @@ from Crypto.Cipher import PKCS1_OAEP
 import binascii
 import tkinter as tk
 from tkinter import filedialog
+import tkinter.messagebox as messagebox
 
 def generateKeys():
     key = RSA.generate(3072)
@@ -22,12 +23,16 @@ def loadKeys():
 
 def decrypt(encrypted):
     private_key = RSA.importKey(open("./keys/privateKey.pem").read())
+    if not private_key:
+        messagebox.showerror("Could find keys in keys/ directory")
     decryptor = PKCS1_OAEP.new(private_key)
     decrypted = decryptor.decrypt(encrypted)
     return decrypted
 
 def encrypt(msg):
     public_key = RSA.importKey(open("./keys/publicKey.pem").read())
+    if not public_key:
+        messagebox.showerror("Could find keys in keys/ directory")
     encryptor = PKCS1_OAEP.new(public_key)
     encrypted = encryptor.encrypt(msg)
     return encrypted
@@ -87,6 +92,9 @@ def save_file():
 
 
 
+
+
+
 root = tk.Tk()
 root.title("RSA Encryption Tool")
 
@@ -131,5 +139,19 @@ save_file_button.pack()
 read_file_button = tk.Button(root, text="Read from File", command=read_file)
 read_file_button.pack()
 
+
+# Create a button to sign the message
+sign_button = tk.Button(root, text="Sign", command=sign_message)
+sign_button.pack()
+
+# Create a label for signature text
+signature_text_label = tk.Label(root, text="Signature Text")
+signature_text_label.pack()
+signature_text = tk.Text(root, height=1, width=50)
+signature_text.pack()
+
+# Create a button to verify the message
+verify_button = tk.Button(root, text="Verify", command=verify_message)
+verify_button.pack()
 
 root.mainloop()
