@@ -4,14 +4,21 @@ import binascii
 import tkinter as tk
 from tkinter import filedialog
 
-key = RSA.generate(3072)
-private_key = key.exportKey()
-public_key = key.publickey().exportKey()
-with open('./keys/privateKey.pem', 'wb') as private_file:
-    private_file.write(private_key)
-with open('./keys/publicKey.pem', 'wb') as public_file:
-    public_file.write(public_key)
+def generateKeys():
+    key = RSA.generate(3072)
+    private_key = key.exportKey()
+    public_key = key.publickey().exportKey()
+    with open('./keys/privateKey.pem', 'wb') as private_file:
+        private_file.write(private_key)
+    with open('./keys/publicKey.pem', 'wb') as public_file:
+        public_file.write(public_key)
 
+def loadKeys():
+    with open('./keys/privateKey.pem', 'rb') as private_file:
+        private_key = RSA.importKey(private_file.read())
+    with open('./keys/publicKey.pem', 'rb') as public_file:
+        public_key = RSA.importKey(public_file.read())
+    return private_key, public_key
 
 def decrypt(encrypted):
     private_key = RSA.importKey(open("./keys/privateKey.pem").read())
@@ -82,6 +89,14 @@ def save_file():
 
 root = tk.Tk()
 root.title("RSA Encryption Tool")
+
+# Create a button to generate keys
+generate_keys_button = tk.Button(root, text="Generate Keys", command=generateKeys)
+generate_keys_button.pack()
+
+# Create a button to load keys
+load_keys_button = tk.Button(root, text="Load Keys", command=loadKeys)
+load_keys_button.pack()
 
 # Create a button to encrypt the file
 encrypt_button = tk.Button(root, text="Encrypt File", command=encrypt_file)
