@@ -24,8 +24,7 @@ pip install pycryptodome
 - Clone the repository to your local machine
 
 Copy code
-
-git clone https://github.com/<username>/rsa\_encryption\_tool.git 
+https://github.com/moneebullah25/rsa-application-python.git
 
 - Run the script
 
