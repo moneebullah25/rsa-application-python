@@ -28,9 +28,9 @@ https://github.com/moneebullah25/rsa-application-python.git
 
 - Run the script
 
-Copy code
-
+```c
 python rsa\_encryption\_tool.py 
+```
 
 **Using the tool**
 
