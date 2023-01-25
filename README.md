@@ -11,25 +11,29 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Python 3.x
 - Pycryptodome library
+- Tkinter
 
 **Installing**
 
 - Install python on your local machine
 - Install pycryptodome library
+- Install tkinter library
 
-Copy code
-
-pip install pycryptodome 
+```c
+pip install pycryptodome
+pip install tk
+```
 
 - Clone the repository to your local machine
 
-Copy code
-https://github.com/moneebullah25/rsa-application-python.git
+```c
+git clone https://github.com/moneebullah25/rsa-application-python.git
+```
 
 - Run the script
 
 ```c
-python rsa\_encryption\_tool.py 
+python rsa-application.py 
 ```
 
 **Using the tool**
